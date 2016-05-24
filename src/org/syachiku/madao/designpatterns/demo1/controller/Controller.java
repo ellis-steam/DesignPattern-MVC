@@ -1,6 +1,8 @@
 package org.syachiku.madao.designpatterns.demo1.controller;
 
 import org.syachiku.madao.designpatterns.demo1.model.Model;
+import org.syachiku.madao.designpatterns.demo1.view.LoginFormEvent;
+import org.syachiku.madao.designpatterns.demo1.view.LoginListener;
 import org.syachiku.madao.designpatterns.demo1.view.View;
 
 /**
@@ -9,7 +11,7 @@ import org.syachiku.madao.designpatterns.demo1.view.View;
  * @author Ellis
  * @since 2016-05-24
  */
-public class Controller {
+public class Controller implements LoginListener{
 	
 	private View  view;
 	private Model model;
@@ -26,5 +28,12 @@ public class Controller {
 	public Controller(View view, Model model) {
 		this.view = view;
 		this.model = model;
+	}
+
+	@Override
+	public void loginPerformed(LoginFormEvent event) {
+		System.out.println("Login event received. ");
+		System.out.println(event.getName() + ": " + event.getPassword());
+		
 	}
 }

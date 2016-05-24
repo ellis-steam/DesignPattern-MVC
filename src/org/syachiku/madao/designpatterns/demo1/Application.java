@@ -34,5 +34,7 @@ public class Application {
 		View view = new View(model);
 		
 		Controller controller = new Controller(view , model);
+		
+		view.setLoginListener(controller);
 	}
 }
