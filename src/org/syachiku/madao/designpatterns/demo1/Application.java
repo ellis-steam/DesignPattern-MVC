@@ -33,6 +33,6 @@ public class Application {
 		
 		View view = new View(model);
 		
-		Controller controller = new Controller(model, view);
+		Controller controller = new Controller(view , model);
 	}
 }

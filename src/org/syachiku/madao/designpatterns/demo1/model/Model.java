@@ -7,5 +7,5 @@ package org.syachiku.madao.designpatterns.demo1.model;
  * @since 2016-05-24
  */
 public class Model {
-
+	
 }
