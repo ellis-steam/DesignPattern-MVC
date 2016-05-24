@@ -6,6 +6,12 @@ import org.syachiku.madao.designpatterns.demo1.controller.Controller;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 import org.syachiku.madao.designpatterns.demo1.view.View;
 
+/**
+ * The simplest implementation of the MVC view.
+ * 
+ * @author Ellis
+ * @since 2016-05-24
+ */
 public class Application {
 
 	public static void main(String[] args) {
@@ -19,6 +25,9 @@ public class Application {
 		});
 	}
 	
+	/**
+	 * Initializes MVC architecture.
+	 */
 	public static void runApp(){
 		Model model = new Model();
 		
