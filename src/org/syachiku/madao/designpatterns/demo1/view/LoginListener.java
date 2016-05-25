@@ -9,6 +9,8 @@ package org.syachiku.madao.designpatterns.demo1.view;
 public interface LoginListener {
 	/**
 	 * Actions to perform when login happens.
+	 * 
+	 * @param event the bean of login info.
 	 */
 	public void loginPerformed(LoginFormEvent event);
 }

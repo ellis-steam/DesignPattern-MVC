@@ -2,6 +2,7 @@ package org.syachiku.madao.designpatterns.demo1.controller;
 
 import java.sql.SQLException;
 
+import org.syachiku.madao.designpatterns.demo1.model.DAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 import org.syachiku.madao.designpatterns.demo1.model.Person;
 import org.syachiku.madao.designpatterns.demo1.model.PersonDAO;
@@ -20,7 +21,7 @@ public class Controller implements CreateUserListener{
 	private View  view;
 	private Model model;
 	
-	private PersonDAO personDAO = new PersonDAO();
+	private PersonDAO personDAO = DAOFactory.getPersonDAO();
 	
 	/**
 	 * Controller constructor that takes view and model as parameter. 
