@@ -6,13 +6,17 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.syachiku.madao.designpatterns.demo1.controller.Database;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 
 /**
@@ -27,6 +31,7 @@ public class View extends JFrame implements ActionListener{
 	private JButton okButton;
 	private JTextField nameField;
 	private JPasswordField passField;
+	private JPasswordField repeatPassField;
 	
 	private LoginListener loginListener;
 	
@@ -43,7 +48,8 @@ public class View extends JFrame implements ActionListener{
 		
 		nameField = new JTextField(10);
 		passField = new JPasswordField(10);
-		okButton = new JButton("OK");
+		repeatPassField = new JPasswordField(10);
+		okButton = new JButton("Create user");
 		
 		setLayout(new GridBagLayout());
 		
@@ -90,9 +96,29 @@ public class View extends JFrame implements ActionListener{
 		
 		add(passField, gc);
 		
-		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.gridx = 1;
+		gc.gridy = 3;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		gc.insets = new Insets(0, 0, 0, 10);
+		gc.fill = GridBagConstraints.NONE;
+		
+		add(new JLabel("Repeat password: "), gc);
+		
+		gc.anchor = GridBagConstraints.LINE_START;
 		gc.gridx = 2;
 		gc.gridy = 3;
+		gc.weightx = 1;
+		gc.weighty = 1;
+		gc.insets = new Insets(0, 0, 0, 10);
+		gc.fill = GridBagConstraints.NONE;
+		
+		add(repeatPassField, gc);
+		
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		gc.gridx = 2;
+		gc.gridy = 4;
 		gc.weightx = 1;
 		gc.weighty = 100;
 		gc.fill = GridBagConstraints.NONE;
@@ -102,6 +128,27 @@ public class View extends JFrame implements ActionListener{
 		//tying up the listener to the buttons
 		okButton.addActionListener(this);
 		
+		//Database db = new Database();
+		//Database db = Database.getInstance();
+		
+		addWindowListener(new WindowAdapter(){
+			
+			@Override
+			public void windowOpened(WindowEvent e){
+			try {
+				Database.getInstance().connect();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			}
+			
+			@Override
+			public void windowClosing(WindowEvent e){
+			Database.getInstance().disconnect();
+			}
+			
+		});
 		
 		//sets the window up
 		setSize(600, 500);
@@ -109,16 +156,21 @@ public class View extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
-	/**
-	 * Prints "Hello there!" when the helloButton is pressed, otherwise "some other button."
-	 */
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		String password = new String(passField.getPassword());
-		String name = nameField.getText();
+		String repeat = new String(repeatPassField.getPassword());
 		
-		fireLoginEvent(new LoginFormEvent(name, password));
+		if (password.equals(repeat)){
+			String name = nameField.getText();
+			
+			fireLoginEvent(new LoginFormEvent(name, password));
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Passwords do not match.", "Error", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	public void setLoginListener(LoginListener loginListener) {
