@@ -1,4 +1,4 @@
-package org.syachiku.madao.designpatterns.demo1.controller;
+package org.syachiku.madao.designpatterns.demo1.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

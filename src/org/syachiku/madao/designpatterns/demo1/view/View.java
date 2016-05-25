@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.syachiku.madao.designpatterns.demo1.controller.Database;
+import org.syachiku.madao.designpatterns.demo1.model.Database;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 
 /**
