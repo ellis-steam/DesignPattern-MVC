@@ -1,8 +1,12 @@
 package org.syachiku.madao.designpatterns.demo1.controller;
 
+import java.sql.SQLException;
+
 import org.syachiku.madao.designpatterns.demo1.model.Model;
-import org.syachiku.madao.designpatterns.demo1.view.LoginFormEvent;
-import org.syachiku.madao.designpatterns.demo1.view.LoginListener;
+import org.syachiku.madao.designpatterns.demo1.model.Person;
+import org.syachiku.madao.designpatterns.demo1.model.PersonDAO;
+import org.syachiku.madao.designpatterns.demo1.view.CreateUserEvent;
+import org.syachiku.madao.designpatterns.demo1.view.CreateUserListener;
 import org.syachiku.madao.designpatterns.demo1.view.View;
 
 /**
@@ -11,10 +15,12 @@ import org.syachiku.madao.designpatterns.demo1.view.View;
  * @author Ellis
  * @since 2016-05-24
  */
-public class Controller implements LoginListener{
+public class Controller implements CreateUserListener{
 	
 	private View  view;
 	private Model model;
+	
+	private PersonDAO personDAO = new PersonDAO();
 	
 	/**
 	 * Controller constructor that takes view and model as parameter. 
@@ -31,9 +37,17 @@ public class Controller implements LoginListener{
 	}
 
 	@Override
-	public void loginPerformed(LoginFormEvent event) {
+	public void userCreated(CreateUserEvent event) {
 		System.out.println("Login event received. ");
 		System.out.println(event.getName() + ": " + event.getPassword());
+
 		
+		try {
+			personDAO.addPerson(new Person(event.getName(), event.getPassword()));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
 	}
 }

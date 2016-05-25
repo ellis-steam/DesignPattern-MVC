@@ -33,7 +33,7 @@ public class View extends JFrame implements ActionListener{
 	private JPasswordField passField;
 	private JPasswordField repeatPassField;
 	
-	private LoginListener loginListener;
+	private CreateUserListener loginListener;
 	
 	/**
 	 * View constructor that takes model which to display or work with.
@@ -111,7 +111,7 @@ public class View extends JFrame implements ActionListener{
 		gc.gridy = 3;
 		gc.weightx = 1;
 		gc.weighty = 1;
-		gc.insets = new Insets(0, 0, 0, 10);
+		gc.insets = new Insets(0, 0, 0, 0);
 		gc.fill = GridBagConstraints.NONE;
 		
 		add(repeatPassField, gc);
@@ -166,20 +166,20 @@ public class View extends JFrame implements ActionListener{
 		if (password.equals(repeat)){
 			String name = nameField.getText();
 			
-			fireLoginEvent(new LoginFormEvent(name, password));
+			fireLoginEvent(new CreateUserEvent(name, password));
 		}
 		else {
 			JOptionPane.showMessageDialog(this, "Passwords do not match.", "Error", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
-	public void setLoginListener(LoginListener loginListener) {
+	public void setLoginListener(CreateUserListener loginListener) {
 		this.loginListener = loginListener;
 	}
 	
-	public void fireLoginEvent(LoginFormEvent event){
+	public void fireLoginEvent(CreateUserEvent event){
 		if (loginListener != null) {
-			loginListener.loginPerformed(event);
+			loginListener.userCreated(event);
 		}
 	}
 	

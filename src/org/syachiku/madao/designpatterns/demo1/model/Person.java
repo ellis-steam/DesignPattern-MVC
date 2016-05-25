@@ -1,5 +1,11 @@
 package org.syachiku.madao.designpatterns.demo1.model;
 
+/**
+ * Bean to show usage of Beans pattern, stores <code>id</code>, <code>name</code>, <code>password</code>.
+ * 
+ * @author Ellis
+ * @since 2016-05-25
+ */
 public class Person {
 	private int id;
 	private String name;
@@ -9,6 +15,19 @@ public class Person {
 		
 	}
 	
+	public Person(String name, String password){
+		this.name = name;
+		this.password = password;
+	}
+	
+	public Person(int id, String name, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+	}
+
+
 	public int getId() {
 		return id;
 	}

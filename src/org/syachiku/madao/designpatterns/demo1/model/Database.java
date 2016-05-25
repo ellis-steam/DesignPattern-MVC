@@ -24,6 +24,10 @@ public class Database {
 		return instance;
 	}
 	
+	public Connection getConnection(){
+		return con;
+	}
+	
 	public void connect() throws Exception{
 		if (con != null)
 			return;
