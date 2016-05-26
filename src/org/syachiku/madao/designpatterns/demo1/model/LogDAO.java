@@ -1,9 +1,11 @@
 package org.syachiku.madao.designpatterns.demo1.model;
 
-public class LogDAO {
-	
-	public void addEntry(String message){
-		
-	}
-	
+import java.util.List;
+
+public interface LogDAO {
+
+	void addEntry(String message);
+
+	List<Log> getEntries(int number);
+
 }

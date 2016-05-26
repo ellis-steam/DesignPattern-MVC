@@ -2,6 +2,7 @@ package org.syachiku.madao.designpatterns.demo1.controller;
 
 import java.sql.SQLException;
 
+import org.syachiku.madao.designpatterns.demo1.model.MySQLDAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.DAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 import org.syachiku.madao.designpatterns.demo1.model.Person;
@@ -21,7 +22,9 @@ public class Controller implements CreateUserListener{
 	private View  view;
 	private Model model;
 	
-	private PersonDAO personDAO = DAOFactory.getPersonDAO();
+	
+	//replaced by DAOFactory
+	//private PersonDAO personDAO = MySQLDAOFactory.getPersonDAO();
 	
 	/**
 	 * Controller constructor that takes view and model as parameter. 
@@ -41,7 +44,10 @@ public class Controller implements CreateUserListener{
 	public void userCreated(CreateUserEvent event) {
 		System.out.println("Login event received. ");
 		System.out.println(event.getName() + ": " + event.getPassword());
-
+		
+		DAOFactory factory = DAOFactory .getFactory(DAOFactory.MYSQL);
+		
+		PersonDAO personDAO = factory.getPersonDAO();
 		
 		try {
 			personDAO.addPerson(new Person(event.getName(), event.getPassword()));

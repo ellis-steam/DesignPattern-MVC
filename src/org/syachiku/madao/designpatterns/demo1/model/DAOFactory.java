@@ -1,13 +1,23 @@
 package org.syachiku.madao.designpatterns.demo1.model;
 
-public class DAOFactory {
+public abstract class DAOFactory {
+
+	public static final int MYSQL = 0;
+	public static final int ORACLE = 1;
 	
-	public static PersonDAO getPersonDAO(){
-		return new PersonDAO();
+	public abstract PersonDAO getPersonDAO();
+
+	public abstract LogDAO getLogDAO();
+	
+	public static DAOFactory getFactory(int type){
+		switch(type){
+		case MYSQL:
+			return new MySQLDAOFactory();
+		case ORACLE:
+			return new OracleDAOFactory();
+		default:
+			return null;
+		}
 	}
-	
-	public static LogDAO getLogDAO(){
-		return new LogDAO();
-	}
-	
+
 }

@@ -8,6 +8,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.syachiku.madao.designpatterns.demo1.model.MySQLDAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.DAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.Database;
 import org.syachiku.madao.designpatterns.demo1.model.Person;
@@ -33,7 +34,9 @@ public class PersonDAOTests {
 	public void setUp() throws Exception {
 		System.out.println("set up");
 		
-		PersonDAO dao = DAOFactory.getPersonDAO();
+		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+			
+		PersonDAO dao = factory.getPersonDAO();
 		
 		dao.deleteAll();
 	}
@@ -55,7 +58,10 @@ public class PersonDAOTests {
 	
 	@Test
 	public void testCreate() throws SQLException{
-		PersonDAO dao = DAOFactory.getPersonDAO();
+		
+		DAOFactory factory = DAOFactory.getFactory(DAOFactory.MYSQL);
+		
+		PersonDAO dao = factory.getPersonDAO();
 		
 		Person person1 = new Person("Bob", "letmein");
 		Person person2 = new Person("Sue", "hello");
