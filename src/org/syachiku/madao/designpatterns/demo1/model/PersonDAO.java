@@ -90,8 +90,36 @@ public class PersonDAO {
 	 * Deletes a person from the database with the specified id.
 	 * 
 	 * @param id the int number to specify the person with which id to delete.
+	 * @throws SQLException 
 	 */
-	public void deletePerson(int id){
+	public int deletePerson(int id) throws SQLException{
+		Connection conn = Database.getInstance().getConnection();
 		
+		PreparedStatement p = conn.prepareStatement("delete from people where id = ?");
+		p.setInt(1, id);
+		
+		int deleted = p.executeUpdate();
+		
+		p.close();
+		
+		return deleted;
+	}
+	
+	/**
+	 * Cleans the people table up.
+	 * 
+	 * @return the number of rows deleted.
+	 * @throws SQLException when SQL error happens.
+	 */
+	public int deleteAll() throws SQLException{
+		Connection conn = Database.getInstance().getConnection();
+		
+		PreparedStatement p = conn.prepareStatement("delete from people");
+		
+		int deleted = p.executeUpdate();
+		
+		p.close();
+		
+		return deleted;
 	}
 }
