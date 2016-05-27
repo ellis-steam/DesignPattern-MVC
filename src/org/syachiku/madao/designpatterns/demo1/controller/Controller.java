@@ -4,11 +4,14 @@ import java.sql.SQLException;
 
 import org.syachiku.madao.designpatterns.demo1.model.MySQLDAOFactory;
 import org.syachiku.madao.designpatterns.demo1.model.DAOFactory;
+import org.syachiku.madao.designpatterns.demo1.model.Database;
 import org.syachiku.madao.designpatterns.demo1.model.Model;
 import org.syachiku.madao.designpatterns.demo1.model.Person;
 import org.syachiku.madao.designpatterns.demo1.model.PersonDAO;
+import org.syachiku.madao.designpatterns.demo1.view.AppListener;
 import org.syachiku.madao.designpatterns.demo1.view.CreateUserEvent;
 import org.syachiku.madao.designpatterns.demo1.view.CreateUserListener;
+import org.syachiku.madao.designpatterns.demo1.view.SaveListener;
 import org.syachiku.madao.designpatterns.demo1.view.View;
 
 /**
@@ -17,7 +20,7 @@ import org.syachiku.madao.designpatterns.demo1.view.View;
  * @author Ellis
  * @since 2016-05-24
  */
-public class Controller implements CreateUserListener{
+public class Controller implements CreateUserListener, SaveListener, AppListener{
 	
 	private View  view;
 	private Model model;
@@ -41,7 +44,9 @@ public class Controller implements CreateUserListener{
 	}
 
 	@Override
-	public void userCreated(CreateUserEvent event) {
+	public void onUserCreated(CreateUserEvent event) {
+		model.addPerson(new Person(event.getName(), event.getPassword()));
+		/*
 		System.out.println("Login event received. ");
 		System.out.println(event.getName() + ": " + event.getPassword());
 		
@@ -55,6 +60,34 @@ public class Controller implements CreateUserListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
+		*/	
+	}
+	@Override
+	public void onSave() {
+		try {
+			model.save();
+		} catch (Exception e) {
+			view.showError("Error saving to database.");
+		}
+	}
+
+	@Override
+	public void onOpen() {
+		try {
+			Database.getInstance().connect();
+		} catch (Exception e) {
+			view.showError("Cannot connect to database.");
+		}
+		
+		try {
+			model.load();
+		} catch (Exception e) {
+			view.showError("Error loading data from database.");
+		}
+	}
+
+	@Override
+	public void onClose() {
+		Database.getInstance().disconnect();
 	}
 }

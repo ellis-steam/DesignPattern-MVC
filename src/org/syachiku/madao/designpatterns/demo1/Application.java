@@ -35,6 +35,10 @@ public class Application {
 		
 		Controller controller = new Controller(view , model);
 		
-		view.setLoginListener(controller);
+		view.setCreateUserListener(controller);
+		view.setSaveListener(controller);
+		view.setAppListener(controller);
+		
+		model.setPeopleChangedListener(view);
 	}
 }
